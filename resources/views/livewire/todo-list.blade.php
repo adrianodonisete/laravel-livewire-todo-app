@@ -6,7 +6,7 @@
 
     <div id="todos-list">
         @foreach ($todos as $todo)
-            @include('livewire.includes.todo-card')
+            @include('livewire.includes.todo-card', ['eventDelete' => false])
         @endforeach
 
 

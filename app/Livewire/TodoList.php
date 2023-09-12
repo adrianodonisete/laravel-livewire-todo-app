@@ -16,6 +16,7 @@ class TodoList extends Component
     public string $name;
 
     public string $search = '';
+    public bool $showEditButton = true;
 
     public function create(array $args = []): void
     {
@@ -26,6 +27,11 @@ class TodoList extends Component
         $this->reset('name');
 
         session()->flash('success', 'Created.');
+    }
+
+    public function delete(Todo $todo)
+    {
+        $todo->delete();
     }
 
     public function render()

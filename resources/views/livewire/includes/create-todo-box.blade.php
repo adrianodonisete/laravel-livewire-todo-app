@@ -24,10 +24,15 @@
 
                         </div>
 
-                        <button wire:click.prevent="create" type="submit"
+                        <button type="submit" wire:loading.remove wire:target="create" wire:click.prevent="create"
                             class="px-4 py-2 bg-blue-500 text-white font-semibold rounded hover:bg-blue-600">
                             Create +
                         </button>
+
+                        <span wire:loading wire:target="create" class="inline-block px-0 my-0 font-italic text-red-700"
+                            style="display:none;">
+                            Creating...
+                        </span>
 
                         @if (session('success'))
                             <span class="text-green-500 text-xs">{{ session('success') }}</span>
