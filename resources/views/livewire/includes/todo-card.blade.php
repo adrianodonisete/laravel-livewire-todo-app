@@ -3,19 +3,29 @@
 
     <div class="flex justify-between space-x-2">
 
-        <!-- <input type="text" placeholder="Todo.."
-                    class="bg-gray-100  text-gray-900 text-sm rounded block w-full p-2.5"
-                    value="Todo Name">
+        <div class="flex items-center">
 
-                    <span class="text-red-500 text-xs block">error</span> -->
+            <input wire:click="toggle({{ $todo->id }})" type="checkbox" class="mr-2"
+                {{ $todo->completed ? 'checked' : '' }}>
 
-        <h3 class="text-lg text-semibold text-gray-800">
-            {{ $todo->name }}
-        </h3>
+            @if ($editTodoId === $todo->id)
+                <input wire:model="edtiTodoName" type="text" placeholder="Todo.."
+                    class="bg-gray-100 text-gray-900 text-sm rounded block w-full p-2.5">
+
+                @error('edtiTodoName')
+                    <span class="text-red-500 text-xs block">{{ $message }}</span>
+                @enderror
+            @else
+                <h3 class="text-lg text-semibold text-gray-800">
+                    {{ $todo->name }}
+                </h3>
+            @endif
+        </div>
 
         <div class="flex items-center space-x-2">
 
-            <button class="text-sm text-teal-500 font-semibold rounded hover:text-teal-800"
+            <button wire:key="bt_edit_{{ $todo->id }}" wire:click="edit({{ $todo->id }})"
+                class="text-sm text-teal-500 font-semibold rounded hover:text-teal-800"
                 id="edit_button_{{ $todo->id }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4">
@@ -24,8 +34,8 @@
                 </svg>
             </button>
 
-            <button wire:click="delete({{ $todo->id }})" wire:loading.remove wire:target="delete"
-                onclick="document.querySelector(`#edit_button_{{ $todo->id }}`).style.display=`none`;"
+            <button wire:key="bt_del_{{ $todo->id }}" wire:click="delete({{ $todo->id }})" wire:loading.remove
+                wire:target="delete" @click="hideElement(`#edit_button_{{ $todo->id }}`);"
                 class="text-sm text-red-500 font-semibold rounded hover:text-teal-800 mr-1">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-4 h-4">
@@ -33,11 +43,12 @@
                         d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
                 </svg>
             </button>
-            <span wire:loading wire:target="delete" class="inline-block px-0 my-0 font-italic text-red-700"
-                style="display:none;">
+            <span wire:key="load_del_{{ $todo->id }}" wire:loading wire:target="delete"
+                class="inline-block px-0 my-0 font-italic text-red-700" style="display:none;">
                 Deleting...
             </span>
         </div>
+
     </div>
 
     <span class="text-xs text-gray-500">
@@ -45,11 +56,15 @@
     </span>
 
     <div class="mt-3 text-xs text-gray-700">
-        <!--
-        <button
-            class="mt-3 px-4 py-2 bg-teal-500 text-white font-semibold rounded hover:bg-teal-600">Update</button>
-        <button
-            class="mt-3 px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600">Cancel</button>
-        -->
+        @if ($editTodoId === $todo->id)
+            <button class="mt-3 px-4 py-2 bg-teal-500 text-white font-semibold rounded hover:bg-teal-600">
+                Update
+            </button>
+
+            <button class="mt-3 px-4 py-2 bg-red-500 text-white font-semibold rounded hover:bg-red-600">
+                Cancel
+            </button>
+        @endif
     </div>
+
 </div>

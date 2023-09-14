@@ -14,10 +14,11 @@
                             </label>
 
                             <input wire:model="name" type="text" id="name" placeholder="Todo.."
-                                class="bg-gray-100  text-gray-900 text-sm rounded block w-full p-2.5">
+                                class="bg-gray-100 text-gray-900 text-sm rounded block w-full p-2.5">
 
                             @error('name')
-                                <span class="text-red-500 text-xs mt-3 block ">
+                                <span x-data="{ show: true }" x-init="setTimeout(() => { show = false }, 12000)" x-show="show"
+                                    class="text-red-500 text-xs mt-3 block">
                                     {{ $message }}
                                 </span>
                             @enderror
@@ -35,7 +36,10 @@
                         </span>
 
                         @if (session('success'))
-                            <span class="text-green-500 text-xs">{{ session('success') }}</span>
+                            <span x-data="{ show: true }" x-init="setTimeout(() => { show = false }, 12000)" x-show="show"
+                                class="text-green-500 text-xs">
+                                {{ session('success') }}
+                            </span>
                         @endif
 
                     </form>
@@ -44,3 +48,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    // window.addEventListener('name-updated', () => {
+    //     alert('Name updated to: ');
+    // })
+</script>

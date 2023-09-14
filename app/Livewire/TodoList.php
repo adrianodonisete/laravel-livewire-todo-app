@@ -16,22 +16,36 @@ class TodoList extends Component
     public string $name;
 
     public string $search = '';
-    public bool $showEditButton = true;
 
-    public function create(array $args = []): void
+    public int $editTodoId;
+    public string $edtiTodoName;
+
+    public function create(): void
     {
         $validated =  $this->validateOnly('name');
 
         Todo::create($validated);
+        session()->flash('success', 'Created.');
 
         $this->reset('name');
-
-        session()->flash('success', 'Created.');
+        $this->name = '';
     }
 
     public function delete(Todo $todo)
     {
         $todo->delete();
+    }
+
+    public function toggle(Todo $todo)
+    {
+        $todo->completed = !$todo->completed;
+        $todo->save();
+    }
+
+    public function edit(Todo $todo)
+    {
+        $this->editTodoId = $todo->id;
+        $this->edtiTodoName = $todo->name;
     }
 
     public function render()

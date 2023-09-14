@@ -7,6 +7,7 @@
     <title>Todo App template</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.13.0/dist/cdn.min.js"></script>
 </head>
 
 <body>
