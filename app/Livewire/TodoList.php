@@ -18,7 +18,9 @@ class TodoList extends Component
     public string $search = '';
 
     public int $editTodoId;
-    public string $edtiTodoName;
+
+    #[Rule('required|min:3|max:50')]
+    public string $editTodoName;
 
     public function create(): void
     {
@@ -28,12 +30,19 @@ class TodoList extends Component
         session()->flash('success', 'Created.');
 
         $this->reset('name');
-        $this->name = '';
+
+        $this->resetPage();
     }
 
-    public function delete(Todo $todo)
+    public function delete($id)
     {
-        $todo->delete();
+        try {
+            Todo::findOrFail($id)
+                ->delete();
+        } catch (\Exception $e) {
+            session()->flash('error', 'Fail to delete!');
+            return;
+        }
     }
 
     public function toggle(Todo $todo)
@@ -45,7 +54,23 @@ class TodoList extends Component
     public function edit(Todo $todo)
     {
         $this->editTodoId = $todo->id;
-        $this->edtiTodoName = $todo->name;
+        $this->editTodoName = $todo->name;
+    }
+
+    public function cancelEdit()
+    {
+        $this->reset('editTodoId', 'editTodoName');
+    }
+
+    public function update()
+    {
+        $this->validateOnly('editTodoName');
+        Todo::find($this->editTodoId)
+            ->update([
+                'name' => $this->editTodoName
+            ]);
+
+        $this->cancelEdit();
     }
 
     public function render()
