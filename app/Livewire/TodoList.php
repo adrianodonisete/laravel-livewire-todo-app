@@ -29,9 +29,11 @@ class TodoList extends Component
         Todo::create($validated);
         session()->flash('success', 'Created.');
 
-        $this->reset('name');
+        // $this->reset('name');
+        // $this->name = 'teste novo';
 
-        $this->resetPage();
+        $this->reset();
+        // $this->resetPage();
     }
 
     public function delete($id)

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo App template</title>
+    <title>Clicker template</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -38,7 +38,7 @@
     </div>
 
     <div id="content" class="mx-auto" style="max-width:500px;">
-        @livewire('todo-list')
+        <livewire:clicker />
     </div>
 
 
