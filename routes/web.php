@@ -20,3 +20,7 @@ Route::get('/', function () {
 Route::get('/clicker', function () {
     return view('pages.click-page');
 });
+
+Route::get('/datatable', function () {
+    return view('pages.datatable-page');
+});

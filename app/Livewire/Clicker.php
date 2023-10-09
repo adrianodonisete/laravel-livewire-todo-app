@@ -6,6 +6,7 @@ use Livewire\Component;
 
 class Clicker extends Component
 {
+    public string $message = 'default';
 
     //https://www.youtube.com/watch?v=15KLG2UnCYE&list=PLqDySLfPKRn543NM_fTrJRdhjBgsogzSC&index=2
     public function handleClick()
