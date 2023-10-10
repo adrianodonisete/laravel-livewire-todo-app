@@ -19,6 +19,7 @@
                                 placeholder="Search" required="">
                         </div>
                     </div>
+
                     <div class="flex space-x-3">
                         <div class="flex space-x-3 items-center">
                             <label class="w-40 text-sm font-medium text-gray-900">User Type :</label>
@@ -67,7 +68,8 @@
                                     <td class="px-4 py-3">
                                         {{ $user->email }}
                                     </td>
-                                    <td class="px-4 py-3
+                                    <td
+                                        class="px-4 py-3
                                     {{ $user->is_admin ? 'text-green-500' : 'text-blue-500' }}">
                                         {{ $user->is_admin ? 'Admin' : 'Member' }}
                                     </td>
@@ -78,10 +80,17 @@
                                         {{ $user->updated_at }}
                                     </td>
                                     <td class="px-4 py-3 flex items-center justify-end">
-                                        <button
-                                            onclick="confirm('Are you sure you want to delete {{ $user->name }} ?') || event.stopImmediatePropagation()"
-                                            wire:click="delete({{ $user->id }})"
-                                            class="px-3 py-1 bg-red-500 text-white rounded">X</button>
+                                        <button wire:click="delete({{ $user->id }})" wire:loading.remove
+                                            wire:target="delete({{ $user->id }})"
+                                            class="px-3 py-1 bg-red-500 text-white rounded"
+                                            onclick="return confirmDelete(event, `{{ $user->name }}`);">X</button>
+
+                                        <span wire:key="load_edit_{{ $user->id }}" wire:loading
+                                            wire:target="delete({{ $user->id }})"
+                                            class="inline-block px-0 py-1 font-italic text-red-500"
+                                            style="display:none;">
+                                            deleting...
+                                        </span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -93,7 +102,7 @@
                     <div class="flex ">
                         <div class="flex space-x-4 items-center mb-3">
                             <label class="w-32 text-sm font-medium text-gray-900">Per Page</label>
-                            <select wire:model.live='perPage'
+                            <select wire:model.live="perPage"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                 <option value="5">5</option>
                                 <option value="7">7</option>
@@ -110,3 +119,16 @@
         </div>
     </section>
 </div>
+
+<script>
+    //confirm('Are you sure you want to delete {{ $user->name }} ?') || event.stopImmediatePropagation()
+    function confirmDelete(event, nameUser) {
+        const c = confirm(`Are you sure you want to delete ${nameUser} ???`);
+        if (c) {
+            return true;
+        } else {
+            event.stopImmediatePropagation();
+            return false;
+        }
+    }
+</script>

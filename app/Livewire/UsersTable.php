@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Table\UserTable as User;
+use App\Models\Table\UserTable;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -31,7 +31,7 @@ class UsersTable extends Component
         $this->resetPage();
     }
 
-    public function delete(User $user)
+    public function delete(UserTable $user)
     {
         $user->delete();
     }
@@ -52,10 +52,8 @@ class UsersTable extends Component
         return view(
             'livewire.users-table',
             [
-                'users' => User::search($this->search)
-                    ->when($this->admin !== '', function ($query) {
-                        $query->where('is_admin', $this->admin);
-                    })
+                'users' => UserTable::search($this->search)
+                    ->when($this->admin !== '', fn ($query) => $query->where('is_admin', $this->admin))
                     ->orderBy($this->sortBy, $this->sortDir)
                     ->paginate($this->perPage)
             ]
