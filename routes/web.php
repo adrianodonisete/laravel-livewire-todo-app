@@ -17,10 +17,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/clicker', function () {
-    return view('pages.click-page');
-});
 
-Route::get('/datatable', function () {
-    return view('pages.datatable-page');
-});
+/**
+ * this routes is using Folio
+ */
+// Route::get('/clicker', function () {
+//     return view('pages.clicker');
+// });
+
+// Route::get('/datatable', function () {
+//     return view('pages.datatable');
+// });

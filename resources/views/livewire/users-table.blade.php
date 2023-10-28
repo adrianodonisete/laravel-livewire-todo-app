@@ -14,6 +14,7 @@
                                         clip-rule="evenodd" />
                                 </svg>
                             </div>
+
                             <input wire:model.live.debounce.300ms="search" type="text"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 "
                                 placeholder="Search" required="">
@@ -83,7 +84,9 @@
                                         <button wire:click="delete({{ $user->id }})" wire:loading.remove
                                             wire:target="delete({{ $user->id }})"
                                             class="px-3 py-1 bg-red-500 text-white rounded"
-                                            onclick="return confirmDelete(event, `{{ $user->name }}`);">X</button>
+                                            onclick="return confirmDelete(event, `{{ $user->name }}`);">
+                                            X
+                                        </button>
 
                                         <span wire:key="load_edit_{{ $user->id }}" wire:loading
                                             wire:target="delete({{ $user->id }})"
