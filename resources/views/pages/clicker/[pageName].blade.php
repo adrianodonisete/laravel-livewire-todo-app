@@ -38,7 +38,7 @@
     </div>
 
     @php
-        $pageName = 'Um nome de teste';
+        $pageName = urldecode($pageName) . ' teste';
     @endphp
     <div id="content" class="mx-auto" style="max-width:500px;">
         <livewire:clicker :pagename="$pageName" />
